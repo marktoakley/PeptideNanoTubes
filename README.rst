@@ -24,14 +24,20 @@ TubeHbond
 ---------
 Analyses the hydrogen bonding pattern in a PDB file.
 Usage::
-  TubeHbond <string file>  <int residues> <int rings>
-An example PDB file is in the examples directory.
+  TubeHbond <string file> <int residues> <int rings>
+The arguments are the name of a PDB file, the number of residues per ring
+and the number of cyclic peptide rings. An example PDB file is in the examples
+directory.
 
 PSHbond
 -------
 Analyses the hydrogen bonding pattern in a PATHSAMPLE database.
 Usage::
   PSHBond <int residues> <int rings> <int res_size>
+The arguments are the number of residues per ring, the number of residues per
+ring and the number of atoms per residue. Currently, only cyclic peptides
+containing one type of residue are supported (but d- and l- variants of the
+same residue are fine).
 
 Reference
 =========
