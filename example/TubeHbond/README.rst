@@ -1,8 +1,8 @@
 TubeHbond
 +++++++++
 
-Usage:
- $ TubeHbond <string file>  <int residues> <int rings>
+Usage::
+  TubeHbond <string file>  <int residues> <int rings>
 
 Example: TubeHBond tetramer.pdb 8 4
 Counts the hydrogen bonds in the included pdb file (a tetramer of a cyclic
