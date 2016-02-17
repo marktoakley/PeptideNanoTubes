@@ -70,7 +70,7 @@ enddo
 
 call count_hb()
 
-write(*,*)"HBonds: max",residues*(rings-1),"total",num_hb,"parallel",num_par,"antiparallel",num_anti
+write(*,*)"HBonds: max",max_hb,"total",num_hb,"parallel",num_par,"antiparallel",num_anti
 
 stop
 end

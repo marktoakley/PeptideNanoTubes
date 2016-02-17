@@ -66,8 +66,8 @@ program metric
    enddo
 
    call count_hb()
-
-   write(30,*)dble(residues+num_par-num_anti)/dble(2*residues)
+   write(30,*)dble(max_hb+num_par-num_anti)/dble(2*max_hb)
+   write(*,*) "Stucture:",recno,"H Bonds:",num_hb,"Parallel:",num_par,"Antiparallel:",num_anti
 !Reset counts
    num_hb=0
    num_par=0

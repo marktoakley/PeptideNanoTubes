@@ -6,7 +6,7 @@ implicit none
 ! 1 O, 2 C, 3 N, 4 H
 double precision :: peptides(100,4,3)=0d0 !Dynamically allocate this
 integer residues,rings
-integer :: num_hb=0,num_anti=0,num_par=0
+integer :: num_hb=0,num_anti=0,num_par=0,max_hb=0
 end module hb
 
 subroutine getneighbours(ires,residues,i1,i2)
@@ -54,6 +54,7 @@ double precision dist
 ! Atom indices in peptides array
 ! 1 O, 2 C, 3 N, 4 H
 
+max_hb=residues*(rings-1)
 do i=1,rings*residues
    do j=1,rings*residues
       if (((i-1)/residues).ne.((j-1)/residues)) then
