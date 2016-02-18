@@ -4,18 +4,17 @@ use hb
 ! Get input from a pdb file
 implicit none
 character*50 arg,filename
-character*4 atname
-integer resnum
-double precision x, y, z
-integer :: ires=0, iring=0
+character*4 atname ! Atom name from PDB file
+integer resnum ! Residue indes
+double precision x, y, z ! Catesian coordinates of atom
+integer :: ires=0, iring=0 ! Indices of current residue and ring
 integer i,j,k
 logical :: finished=.false.
 
 if (COMMAND_ARGUMENT_COUNT().lt.3) then
-   write(*,*) "usage: TubeHbond <string file>  <int residues> <int rings>"
+   write(*,*) "usage: TubeHbond <string file> <int residues> <int rings>"
    stop
 endif
-
 
 call GET_COMMAND_ARGUMENT(1,arg)
 read(arg,*)filename
@@ -27,6 +26,7 @@ read(arg,*)rings
 ! Atom indices in peptides array
 ! 1 O, 2 C, 3 N, 4 H
 
+! Read PDB file and copy coordinates of peptide atoms to peptides array.
 open(10,file=filename)
 do while (.not.finished)
    read(10,'(12X,A4,6X,I4,4X,3(F8.3))')atname,resnum,x,y,z
