@@ -54,7 +54,7 @@ def build_ring(num_res, res_coords):
     shift = np.array([0,radius,0])
     res_coords = res_coords + shift
     coords = np.copy(res_coords)
-    theta = 2.*pi / num_res
+    theta = -2.*pi / num_res
     rot = np.array([[cos(theta),sin(theta),0],
                     [-sin(theta),cos(theta),0],
                     [0,0,-1]])
@@ -63,10 +63,23 @@ def build_ring(num_res, res_coords):
         coords = np.append(coords,res_coords,axis=0)
     return coords
 
+def write_amber_coords(coords,res_name,file_name="coords.inpcrd"):
+    '''Write an Amber inpcrd file containing the nanotube's coordinates.'''
+    with open(file_name,'w') as inpcrd:
+        inpcrd.write(res_name+"\n")
+        inpcrd.write("%5i\n" % len(coords))
+        new_coords = coords.flatten().tolist()
+        for i in range(len(new_coords)):
+            inpcrd.write("%12.7f" % new_coords[i])
+            if (i+1)%6 ==0:
+                inpcrd.write("\n")
+
 if __name__ == "__main__":
     amber_home=os.environ.get('AMBERHOME')
     lib = amber_home+"/dat/leap/lib/all_amino03.lib"
     num_res = 8
-    res_coords =  read_amber_coords("ALA", lib)
+    res_name="ALA"
+    res_coords =  read_amber_coords(res_name, lib)
     res_coords = orient_coords(res_coords)
-    print(build_ring(num_res, res_coords))
+    coords = build_ring(num_res, res_coords)
+    write_amber_coords(coords,res_name)
