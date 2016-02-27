@@ -1,28 +1,47 @@
 Description
 ===========
-Software to analyse hydrogen bond patterns in cyclic peptide nanotubes.
+Software to construct and analyse cyclic peptide nanotubes.
 
+Tubemaker
+---------
+This program constructs Amber_ input files containing cyclic peptide nanotubes.
+
+TubeHbond and PSHbond
+---------------------
 These programs count parallel and antiparallel hydrogen bonds in the structures
 of cyclic peptide nanotubes. The hydrogen bonds are defined using the
 DSSP_ method. The input structures can come from PDB_ files or PATHSAMPLE_ databases
 
-.. _DSSP: http://dx.doi.org/10.1002/bip.360221211
-.. _PDB: http://www.rcsb.org/
-.. _PATHSAMPLE: http://www-wales.ch.cam.ac.uk/PATHSAMPLE/
-
 Installation
 ============
-To build this software you will need a fortran compiler (I use gfortran).
+Tubemaker
+---------
+Tubemaker depends on the numpy python library.
+
+TubeHbond and PSHbond
+---------------------
+To build these programs you will need a fortran compiler (I use gfortran).
 Build with::
   cd src
   make
 
 Usage
 =====
+Tubemaker
+---------
+Tubemaker constructs an Amber_ inpcrd file containing a cyclic peptide nanotube.
+Run Tubemaker with::
+  python nanotube.py <#rings> <#residues> <res_name> [arguments]
+For example, build an antiparallel tetramer of cyclic octa-alanine with
+::
+  python nanotube.py 4 8 ALA --anti
+For a full list of arguments, use
+::
+  python nanotube.py -h
 
 TubeHbond
 ---------
-Analyses the hydrogen bonding pattern in a PDB file.
+Analyses the hydrogen bonding pattern in a PDB_ file.
 Usage::
   TubeHbond <string file> <int residues> <int rings>
 The arguments are the name of a PDB file, the number of residues per ring
@@ -31,7 +50,7 @@ directory.
 
 PSHbond
 -------
-Analyses the hydrogen bonding pattern in a PATHSAMPLE database.
+Analyses the hydrogen bonding pattern in a PATHSAMPLE_ database.
 Usage::
   PSHBond <int residues> <int rings> <int res_size>
 The arguments are the number of residues per ring, the number of residues per
@@ -45,3 +64,9 @@ If you use this software, please cite:
 
 Mark T. Oakley and Roy L. Johnston, J. Chem. Theory Comput., 2014, 10, 1810-1816.
 http://dx.doi.org/10.1021/ct500004k
+
+.. _DSSP: http://dx.doi.org/10.1002/bip.360221211
+.. _PDB: http://www.rcsb.org/
+.. _PATHSAMPLE: http://www-wales.ch.cam.ac.uk/PATHSAMPLE/
+.. _GMIN: http://www-wales.ch.cam.ac.uk/GMIN/
+.. _Amber: http://ambermd.org
