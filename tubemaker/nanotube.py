@@ -5,8 +5,7 @@ This program constructs cyclic peptide nanotubes
 '''
 
 import numpy as np
-import os
-import sys
+import getopt, os, sys
 from math import cos,sin,radians,pi
 
 def read_amber_coords(residue, amber_lib):
@@ -98,10 +97,20 @@ def write_amber_coords(coords,res_name,file_name="coords.inpcrd"):
                 inpcrd.write("\n")
 
 def usage():
-    print "nanotube.py <#rings> <#residues> <res_name>"
+    print("nanotube.py <#rings> <#residues> <res_name> [arguments]")
+    print("Arguments:")
+    print("--antipar  antiparallel nanotube")
+    print("--lib      location of Amber library file")
+    print("--par      parallel nanotube")
+    
+
+    
 
 if __name__ == "__main__":
     print sys.argv
+    #Default options
+    parallel=True
+    lib=None
     
     if len(sys.argv) < 4:
         usage()
@@ -110,11 +119,33 @@ if __name__ == "__main__":
         num_rings = int(sys.argv[1])
         num_res   = int(sys.argv[2])
         res_name  = sys.argv[3]
+        
+    try:
+        opts, args = getopt.getopt(sys.argv[4:], "h", ["help",
+                                                       "par","parallel",
+                                                       "anti","antiparallel",
+                                                       "lib="])
+    except getopt.GetoptError as err:
+        print str(err) 
+        usage()
+        sys.exit(2)
+    for o, a in opts:
+        if o in ("-h", "--help"):
+            usage()
+            sys.exit()
+        elif o in ("--par","--parallel"):
+            parallel=True
+        elif o in ("--anti","--antiparallel"):
+            parallel=False
+        elif o in ("--lib"):
+            lib = a
     
-    amber_home=os.environ.get('AMBERHOME')
-    lib = amber_home+"/dat/leap/lib/all_amino03.lib"
+    if lib is None:
+        amber_home=os.environ.get('AMBERHOME')
+        lib = amber_home+"/dat/leap/lib/all_amino03.lib"
+        
+    # Make nanotube
     res_coords =  read_amber_coords(res_name, lib)
     res_coords = orient_coords(res_coords)
-    #coords = build_ring(num_res, res_coords)
-    coords = build_tube(num_rings, num_res, res_coords,parallel = False)
+    coords = build_tube(num_rings, num_res, res_coords,parallel)
     write_amber_coords(coords,res_name)
