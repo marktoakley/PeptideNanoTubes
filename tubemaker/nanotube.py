@@ -6,6 +6,7 @@ This program constructs cyclic peptide nanotubes
 
 import numpy as np
 import os
+import sys
 from math import cos,sin,radians,pi
 
 def read_amber_coords(residue, amber_lib):
@@ -96,12 +97,22 @@ def write_amber_coords(coords,res_name,file_name="coords.inpcrd"):
             if (i+1)%6 ==0:
                 inpcrd.write("\n")
 
+def usage():
+    print "nanotube.py <#rings> <#residues> <res_name>"
+
 if __name__ == "__main__":
+    print sys.argv
+    
+    if len(sys.argv) < 4:
+        usage()
+        exit()
+    else:
+        num_rings = int(sys.argv[1])
+        num_res   = int(sys.argv[2])
+        res_name  = sys.argv[3]
+    
     amber_home=os.environ.get('AMBERHOME')
     lib = amber_home+"/dat/leap/lib/all_amino03.lib"
-    num_res = 8
-    num_rings = 4
-    res_name="ALA"
     res_coords =  read_amber_coords(res_name, lib)
     res_coords = orient_coords(res_coords)
     #coords = build_ring(num_res, res_coords)
