@@ -107,7 +107,6 @@ def usage():
     
 
 if __name__ == "__main__":
-    print sys.argv
     #Default options
     parallel=True
     lib=None
@@ -126,7 +125,7 @@ if __name__ == "__main__":
                                                        "anti","antiparallel",
                                                        "lib="])
     except getopt.GetoptError as err:
-        print str(err) 
+        print(str(err))
         usage()
         sys.exit(2)
     for o, a in opts:
