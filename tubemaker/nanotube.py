@@ -39,9 +39,9 @@ def orient_coords(coords_array):
     coords_array = coords_array - ca
     # Rotate coordinates
     theta = radians(35)
-    rot = np.array([[cos(theta),0,sin(theta)],
-                     [sin(theta),0, -cos(theta)],
-                     [         0,         1. ,   0000]])
+    rot = np.array([[cos(theta), 0.,  sin(theta)],
+                    [sin(theta), 0., -cos(theta)],
+                    [         0, 1. ,         0.]])
     coords_array = coords_array.dot(rot)
     return coords_array
 
@@ -55,9 +55,9 @@ def build_ring(num_res, res_coords):
     res_coords = res_coords + shift
     coords = np.copy(res_coords)
     theta = -2.*pi / num_res
-    rot = np.array([[cos(theta),sin(theta),0],
-                    [-sin(theta),cos(theta),0],
-                    [0,0,-1]])
+    rot = np.array([[ cos(theta), sin(theta),  0.],
+                    [-sin(theta), cos(theta),  0.],
+                    [          0,          0, -1.]])
     for i in range(num_res-1):
         res_coords=res_coords.dot(rot)
         coords = np.append(coords,res_coords,axis=0)
@@ -71,15 +71,15 @@ def build_tube(num_rings, num_res, res_coords, parallel=True, spacing=5.0):
     res_coords: The coordinates of a peptide residue (see orient_coords)'''
     ring_coords = build_ring(num_res, res_coords)
     tube_coords = ring_coords.copy()
-    shift = np.array([0.,0.,spacing])
+    shift = np.array([0., 0., spacing])
     for i in range(num_rings-1):
         ring_coords=ring_coords+shift
         if not parallel:
             ring_coords = ring_coords*np.array([-1.,1.,1.])
             theta = 2*pi/num_res
-            rot = np.array([[cos(theta),-sin(theta),0],
-                            [sin(theta), cos(theta),0],
-                            [         0,  0,1]])
+            rot = np.array([[ cos(theta), -sin(theta), 0.],
+                            [ sin(theta),  cos(theta), 0.],
+                            [         0.,          0., 1.]])
             ring_coords=ring_coords.dot(rot)
         tube_coords = np.append(tube_coords,ring_coords,axis=0)
     return tube_coords
