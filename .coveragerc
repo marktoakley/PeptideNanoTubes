@@ -1,0 +1,6 @@
+[run]
+source = tubemaker
+[report]
+omit =
+    */python?.?/*
+    */site-packages/nose/*
