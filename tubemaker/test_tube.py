@@ -3,8 +3,9 @@
 '''
 import unittest
 import numpy as np
+import os
 
-from tubemaker.nanotube import orient_coords, build_ring, build_tube
+from tubemaker.nanotube import orient_coords, build_ring, build_tube, write_amber_coords
 
 class RandomTest(unittest.TestCase):
     
@@ -21,15 +22,23 @@ class RandomTest(unittest.TestCase):
                                     [  6.00882400e+00,   1.59317500e+00,  -8.44976800e-06]])
         self.res_coords = orient_coords(self.res_coords)
         
-    def test_ring(self):
+    def test_writer(self):
         res_coords = self.res_coords.copy()
         coords = build_ring(8,res_coords)
         self.assertEquals(80,len(coords))
+        write_amber_coords(coords,"ALA")
+        self.assertTrue(os.path.isfile("coords.inpcrd"))
+        os.remove("coords.inpcrd")
         
-    def test_tube(self):
+    def test_parallel_tube(self):
         res_coords = self.res_coords.copy()
         coords = build_tube(4, 8, res_coords)
-        self.assertEquals(320,len(coords))    
+        self.assertEquals(320,len(coords))
+
+    def test_antiparallel_tube(self):
+        res_coords = self.res_coords.copy()
+        coords = build_tube(4, 8, res_coords, parallel = False)
+        self.assertEquals(320,len(coords))   
         
 if __name__ == "__main__":
     unittest.main()
