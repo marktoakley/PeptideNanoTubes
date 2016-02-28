@@ -16,7 +16,7 @@ Installation
 ============
 Tubemaker
 ---------
-Tubemaker depends on the numpy python library.
+Tubemaker depends on the numpy python library. It also requires an Amber_ library file (several are available in AmberTools, which can be obtained from the Amber_ website).
 
 TubeHbond and PSHbond
 ---------------------
@@ -35,8 +35,10 @@ Run Tubemaker with::
 For example, build an antiparallel tetramer of cyclic octa-alanine with
 ::
   python nanotube.py 4 8 ALA --anti
-For a full list of arguments, use
-::
+The initial coordinates for the peptides are taken from an Amber library file.
+By default, the ff03 library from Amber or Ambertools is used (if one of them is installed).
+Otherwise, a library file can be specified with the --lib argument.
+For a full list of arguments, use::
   python nanotube.py -h
 
 TubeHbond
