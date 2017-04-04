@@ -82,7 +82,9 @@ program metric
          call count_hb()
 
 ! Write hydrogen bond metric to file
-         write(30,*)dble(max_hb+num_par-num_anti)/dble(2*max_hb)
+         write(30,*)num_par, num_anti, &
+         dble(max_hb+num_par-num_anti)/dble(2*max_hb), &
+          centroid_distance(1,2)
 ! Print more detailed hydrogen bond analysis to std out.
          write(*,*) "Stucture:",recno,"H Bonds:",num_hb,"Parallel:",num_par,"Antiparallel:",num_anti
 !Reset counts

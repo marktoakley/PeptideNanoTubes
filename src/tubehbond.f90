@@ -9,7 +9,7 @@ module hb
    double precision :: peptides(100,4,3)=0d0
 ! number of rings and number of residues per ring
    integer rings,residues
-! counters for different tyoes of hydrogen bonds
+! counters for different types of hydrogen bonds
    integer :: num_hb=0,num_anti=0,num_par=0,max_hb=0
 contains
 
@@ -17,8 +17,8 @@ contains
 ! ires-1 unless ires is one of the residues that connects to close the ring.
    subroutine getneighbours(ires,i1,i2)
       implicit none
-      integer ires ! Residue index
-      integer i1,i2 ! Indices of neighbours
+      integer, intent(in):: ires ! Residue index
+      integer, intent(out):: i1,i2 ! Indices of neighbours
       i1=ires-1
       i2=ires+1
       if (mod(i1,residues).eq.0) then
@@ -90,4 +90,39 @@ contains
       enddo
       return
    end subroutine count_hb
+
+   function centroid(ring_no)
+! Calculate the position of the centroid of a ring
+! This calculation is based on the peptide N and C atoms
+      integer ring_no
+      integer i,j
+      double precision centroid(3)
+      centroid=0d0
+      do j =1,3
+         do i=residues*(ring_no-1)+1,residues*ring_no
+            centroid(j)=centroid(j)+peptides(i,2,j) ! C atom
+            centroid(j)=centroid(j)+peptides(i,3,j) ! N atom
+         enddo
+         centroid(j)=centroid(j)/(2*residues)
+      enddo
+      return
+   end function centroid
+
+   function centroid_distance(r1,r2)
+! Calculate the distance between the centroids of two peptide rings
+      integer r1,r2
+      integer i
+      double precision cent1(3), cent2(3)
+      double precision centroid_distance
+      !double precision centroid(3)
+      centroid_distance=0d0
+      cent1=centroid(r1)
+      cent2=centroid(r2)
+      do i=1,3
+         centroid_distance=centroid_distance+(cent1(i)-cent2(i))**2
+      enddo
+      centroid_distance=dsqrt(centroid_distance)
+      return
+   end function centroid_distance
+
 end module hb
