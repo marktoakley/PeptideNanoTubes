@@ -18,7 +18,7 @@ Tubemaker
 ---------
 Tubemaker depends on the numpy python library. It also requires an Amber_ library file (several are available in AmberTools, which can be obtained from the Amber_ website).
 
-TubeHbond and PSHbond
+PDBHbond and PSHbond
 ---------------------
 To build these programs you will need a fortran compiler (I use gfortran).
 Build with::
@@ -41,11 +41,11 @@ Otherwise, a library file can be specified with the --lib argument.
 For a full list of arguments, use::
   python nanotube.py -h
 
-TubeHbond
+PDBHbond
 ---------
 Analyses the hydrogen bonding pattern in a PDB_ file.
 Usage::
-  TubeHbond <string file> <int residues> <int rings>
+  PDBHbond <string file> <int residues> <int rings>
 The arguments are the name of a PDB file, the number of residues per ring
 and the number of cyclic peptide rings. An example PDB file is in the examples
 directory.
@@ -56,9 +56,12 @@ Analyses the hydrogen bonding pattern in a PATHSAMPLE_ database.
 Usage::
   PSHBond <int residues> <int rings> <int res_size>
 The arguments are the number of residues per ring, the number of residues per
-ring and the number of atoms per residue. Currently, only cyclic peptides
-containing one type of residue are supported (but d- and l- variants of the
-same residue are fine).
+ring and the number of atoms per residue.
+For example, the cyclo-Ala8 dimer::
+  PSHbond 8 2 10
+Currently, only cyclic peptides containing one type of residue are supported 
+(but d- and l- variants of the same residue are fine). This program writes a
+file called ``hbonds.csv`` containing properties of the cyclic peptide nanotube.
 
 Reference
 =========
