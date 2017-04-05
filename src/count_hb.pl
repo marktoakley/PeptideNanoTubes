@@ -6,8 +6,8 @@ foreach $line (@file){
 	@words = split(/=|\s+/,$line);
 	$i = $words[3];
 	$energy = $words[5];
-	$line=`TubeHBond lowest$i.1.pdb $ARGV[0] $ARGV[1]`;
-	print "$i $energy $line";
+	print `PDBHbond lowest$i.1.pdb $ARGV[0] $ARGV[1]`;
+	print "$i $energy $hb";
 }
 
 sub usage{
